@@ -5,7 +5,7 @@ import { CCIPReceiver } from "@chainlink/contracts-ccip/src/v0.8/ccip/applicatio
 import { IRouterClient } from "@chainlink/contracts-ccip/src/v0.8/ccip/interfaces/IRouterClient.sol";
 import { ICreditBureau } from "./interfaces/ICreditBureau.sol";
 import { LinkTokenInterface } from "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol";
-import { Client } from "@chainlink/contracts-ccip/src/v0.8/ccip/libraries/Client.sol"; // Import the Client library
+import { Client } from "@chainlink/contracts-ccip/src/v0.8/ccip/libraries/Client.sol"; 
 
 contract SatelliteCreditBureau is CCIPReceiver {
     LinkTokenInterface public linkToken;
@@ -74,7 +74,7 @@ contract SatelliteCreditBureau is CCIPReceiver {
         Client.EVM2AnyMessage memory message = Client.EVM2AnyMessage({
             receiver: abi.encode(destinationAddress),
             data: payload,
-            tokenAmounts: new Client.EVMTokenAmount[](0), // No token amounts for now
+            tokenAmounts: new Client.EVMTokenAmount[](0), 
             extraArgs: _argsToBytes(Client.EVMExtraArgsV1({gasLimit: 200_000, strict: false})),
             feeToken: feeToken
         });

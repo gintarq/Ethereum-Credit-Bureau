@@ -7,6 +7,8 @@ import { Client } from "@chainlink/contracts-ccip/src/v0.8/ccip/libraries/Client
 import { ICreditBureau } from "./interfaces/ICreditBureau.sol";
 
 contract CreditBureau is ICreditBureau, CCIPReceiver {
+    using Strings for string;
+
     mapping(address => bool) public whitelist;
     mapping(address => Report[]) public creditHistory;
 
@@ -84,16 +86,16 @@ contract CreditBureau is ICreditBureau, CCIPReceiver {
     }
 
     function _getChainId(string memory chain) internal pure returns (uint256) {
-        if (Strings.equal(chain, "Ethereum")) return 1;
-        if (Strings.equal(chain, "optimism")) return 10;
-        if (Strings.equal(chain, "arbitrum")) return 42_161;
-        if (Strings.equal(chain, "Polygon")) return 137;
-        if (Strings.equal(chain, "Avalanche")) return 43_114;
-        if (Strings.equal(chain, "binance")) return 56;
-        if (Strings.equal(chain, "celo")) return 42_220;
-        if (Strings.equal(chain, "Fantom")) return 250;
-        if (Strings.equal(chain, "linea")) return 59_144;
-        if (Strings.equal(chain, "base")) return 8453;
+        if (chain.equal("Ethereum")) return 1;
+        if (chain.equal("optimism")) return 10;
+        if (chain.equal("arbitrum")) return 42_161;
+        if (chain.equal("Polygon")) return 137;
+        if (chain.equal("Avalanche")) return 43_114;
+        if (chain.equal("binance")) return 56;
+        if (chain.equal("celo")) return 42_220;
+        if (chain.equal("Fantom")) return 250;
+        if (chain.equal("linea")) return 59_144;
+        if (chain.equal("base")) return 8453;
 
         return 0;
     }

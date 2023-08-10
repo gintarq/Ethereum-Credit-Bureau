@@ -2,9 +2,10 @@ const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
 describe("Credit Bureau Tests", function () {
-  let CreditBureau, SatelliteCreditBureau, creditBureau, satelliteCreditBureau;
-  const routerAddress = "0xYourRouterAddressHere";  // Mock address for local tests; replace with actual address for testnet/mainnet deployment
-  const linkAddress = "0xYourLinkAddressHere";      // Mock address for local tests; replace with actual address for testnet/mainnet deployment
+  let CreditBureau, SatelliteCreditBureau, creditBureau, satelliteCreditBureau, mockRouter;
+
+  const routerAddress = "0x1111111111111111111111111111111111111111";  // Mock address for local tests
+  const linkAddress = "0x2222222222222222222222222222222222222222";   // Mock address for local tests
 
   before(async function () {
     CreditBureau = await ethers.getContractFactory("CreditBureau");
@@ -15,13 +16,12 @@ describe("Credit Bureau Tests", function () {
 
     const MockRouter = await ethers.getContractFactory("MockRouter");
     mockRouter = await MockRouter.deploy();
-    await mockRouter.deployed();
   });
 
   it("Submit local credit report", async function () {
     const [reporter, user] = await ethers.getSigners();
     
-    const reportData = createReport();
+    const reportData = createReport(reporter);
     await creditBureau.connect(reporter).submitCreditReport(reportData, user.address);
 
     const report = await creditBureau.creditHistory(user.address, 0);
@@ -34,7 +34,7 @@ describe("Credit Bureau Tests", function () {
     await mockRouter.setTargetContract(creditBureau.address);
     await satelliteCreditBureau.setRouter(mockRouter.address);
 
-    const reportData = createReport();
+    const reportData = createReport(reporter);
     await satelliteCreditBureau.connect(reporter).submitCreditReportWithLINK("MockChain", creditBureau.address, reportData, user.address);
 
     const report = await creditBureau.creditHistory(user.address, 0);
@@ -42,20 +42,20 @@ describe("Credit Bureau Tests", function () {
   });
 
   function runAsserts(report, reportData) {
-    assert.equal(report.creditProvider, reportData.creditProvider, "Mismatch in creditProvider");
-    assert.equal(report.reporter, reportData.reporter, "Mismatch in reporter");
-    assert.equal(report.review, reportData.review, "Mismatch in review");
-    assert.equal(report.status, reportData.status, "Mismatch in status");
-    assert.equal(report.credit.collateral, reportData.credit.collateral, "Mismatch in collateral");
-    assert.equal(report.credit.creditType, reportData.credit.creditType, "Mismatch in creditType");
-    assert.equal(report.credit.fromDate, reportData.credit.fromDate, "Mismatch in fromDate");
-    assert.equal(report.credit.toDate, reportData.credit.toDate, "Mismatch in toDate");
-    assert.equal(report.credit.amount, reportData.credit.amount, "Mismatch in amount");
-    assert.equal(report.credit.token, reportData.credit.token, "Mismatch in token");
-    assert.equal(ethers.utils.toUtf8String(report.data), ethers.utils.toUtf8String(reportData.data), "Mismatch in data");
+    expect(report.creditProvider).to.equal(reportData.creditProvider, "Mismatch in creditProvider");
+    expect(report.reporter).to.equal(reportData.reporter, "Mismatch in reporter");
+    expect(report.review).to.equal(reportData.review, "Mismatch in review");
+    expect(report.status).to.equal(reportData.status, "Mismatch in status");
+    expect(report.credit.collateral).to.equal(reportData.credit.collateral, "Mismatch in collateral");
+    expect(report.credit.creditType).to.equal(reportData.credit.creditType, "Mismatch in creditType");
+    expect(report.credit.fromDate).to.equal(reportData.credit.fromDate, "Mismatch in fromDate");
+    expect(report.credit.toDate).to.equal(reportData.credit.toDate, "Mismatch in toDate");
+    expect(report.credit.amount).to.equal(reportData.credit.amount, "Mismatch in amount");
+    expect(report.credit.token).to.equal(reportData.credit.token, "Mismatch in token");
+    expect(ethers.utils.toUtf8String(report.data)).to.equal(ethers.utils.toUtf8String(reportData.data), "Mismatch in data");
   }
 
-  function createReport() {
+  function createReport(reporter) {
     const randomAddress = ethers.Wallet.createRandom().address;
     const randomReview = randomNumber(0, 2); // Assuming 0, 1, 2 are the valid enum values
     const randomStatus = randomNumber(0, 3); // Assuming 0, 1, 2, 3 are the valid enum values

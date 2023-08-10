@@ -81,5 +81,5 @@ interface ICreditBureau {
         bytes data;
     }
 
-    function submitCreditReport(Report memory report, address user) external;
+    function submitCreditReport(Report calldata report, address user) external;
 }
