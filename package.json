@@ -1,0 +1,42 @@
+{
+  "name": "credit-bureau",
+  "version": "1.0.0",
+  "description": "cross-chain credit bureau for reporting good and bad payers",
+  "main": "index.js", 
+  "scripts": {
+    "audit": "yarn audit"
+  },
+  "repository": "https://github.com/gintarq/Ethereum-Credit-Reporting-Agency",
+  "author": "gintarq",
+  "license": "LGPL-3.0-or-later",
+  "private": false,
+  "dependencies": {
+    "@chainlink/contracts": "^0.6.1",
+    "@chainlink/contracts-ccip": "^0.7.6",
+    "@openzeppelin/contracts": "^4.9.3",
+    "@types/chai": "^4.3.5",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^20.4.9",
+    "flat": "^5.0.2",
+    "minimatch": "^9.0.3",
+    "request": "^2.88.2",
+    "request-promise-native": "^1.0.9",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6",
+    "versions": "^11.0.2"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
+    "@nomicfoundation/hardhat-ethers": "^3.0.0",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "@nomicfoundation/hardhat-verify": "^1.0.0",
+    "@typechain/ethers-v6": "^0.4.0",
+    "@typechain/hardhat": "^8.0.0",
+    "chai": "^4.2.0",
+    "hardhat": "^2.17.1",
+    "hardhat-gas-reporter": "^1.0.8",
+    "solidity-coverage": "^0.8.1",
+    "typechain": "^8.2.0"
+  }
+}
