@@ -1,4 +1,4 @@
-require("/Users/gintarasmisiunas/Superhack/Ethereum-Credit-Reporting-Agency/node_modules/@nomicfoundation/hardhat-toolbox");
+require("/Users/gintarasmisiunas/Superhack/Ethereum-Credit-Bureau/node_modules/@nomicfoundation/hardhat-toolbox");
 
 module.exports = {
   // Specify the version of Solidity you're using
