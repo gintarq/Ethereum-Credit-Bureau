@@ -84,19 +84,4 @@ contract CreditBureau is ICreditBureau, CCIPReceiver {
         (Report memory report, address user) = abi.decode(any2EvmMessage.data, (Report, address));
         _addReport(report, abi.decode(any2EvmMessage.sender, (address)), user, uint256(any2EvmMessage.sourceChainSelector));
     }
-
-    function _getChainId(string memory chain) internal pure returns (uint256) {
-        if (chain.equal("Ethereum")) return 1;
-        if (chain.equal("optimism")) return 10;
-        if (chain.equal("arbitrum")) return 42_161;
-        if (chain.equal("Polygon")) return 137;
-        if (chain.equal("Avalanche")) return 43_114;
-        if (chain.equal("binance")) return 56;
-        if (chain.equal("celo")) return 42_220;
-        if (chain.equal("Fantom")) return 250;
-        if (chain.equal("linea")) return 59_144;
-        if (chain.equal("base")) return 8453;
-
-        return 0;
-    }
 }
