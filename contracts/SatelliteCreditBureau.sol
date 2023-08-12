@@ -12,11 +12,6 @@ contract SatelliteCreditBureau is CCIPReceiver {
     address public routerAddress;
     address public admin;
 
-    modifier onlyAdmin() {
-        require(msg.sender == admin, "Only admin can call this function");
-        _;
-    }
-
     constructor(address router_, address link_) CCIPReceiver(router_) {
         linkToken = LinkTokenInterface(link_);
         routerAddress = router_;
@@ -26,7 +21,7 @@ contract SatelliteCreditBureau is CCIPReceiver {
     event CrossChainReportSent(string indexed destinationChain, address indexed reporter, address indexed user);
     event CrossChainReportReceived(ICreditBureau.Report report, address indexed user);
 
-    function setRouter(address newRouter) external onlyAdmin {
+    function setRouter(address newRouter) external {
         routerAddress = newRouter;
     }
 
